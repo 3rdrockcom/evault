@@ -25,6 +25,8 @@ func (r *Router) appendErrorHandler() {
 		switch message {
 		case API.ErrInvalidCredentials.Error():
 			code = http.StatusForbidden
+		case DataStore.ErrInvalidPartitionID.Error():
+			code = http.StatusBadRequest
 		case DataStore.ErrEntryNotFound.Error():
 			code = http.StatusNotFound
 		case DataStore.ErrEntryInvalid.Error():

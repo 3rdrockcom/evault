@@ -3,6 +3,9 @@ package datastore
 import "errors"
 
 var (
+	// ErrInvalidPartitionID is an error given when the partition ID is not valid
+	ErrInvalidPartitionID = errors.New("Invalid Partition ID")
+
 	// ErrEntryInvalid is an error given when the entry ID is not valid
 	ErrEntryInvalid = errors.New("Invalid Entry ID")
 

@@ -4,6 +4,7 @@ import (
 	"strconv"
 
 	API "github.com/epointpayment/evault/app/services/api"
+	DataStore "github.com/epointpayment/evault/app/services/datastore"
 	User "github.com/epointpayment/evault/app/services/user"
 
 	"github.com/labstack/echo"
@@ -27,6 +28,13 @@ func BasicValidator(username, password string, c echo.Context) (isValid bool, er
 		return
 	}
 
+	// Get partition ID
+	partitionID, err := strconv.Atoi(c.QueryParam("partition_id"))
+	if err != nil {
+		err = DataStore.ErrInvalidPartitionID
+		return
+	}
+
 	// Initialize API service
 	us := User.New()
 
@@ -38,5 +46,6 @@ func BasicValidator(username, password string, c echo.Context) (isValid bool, er
 
 	// Pass user information to context
 	c.Set("userID", user.ID)
+	c.Set("partitionID", partitionID)
 	return
 }

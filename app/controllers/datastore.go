@@ -20,7 +20,8 @@ func (co Controllers) GetEntry(c echo.Context) error {
 
 	// Initialize datastore service
 	userID := c.Get("userID").(int)
-	dss := DataStore.New(userID)
+	partitionID := c.Get("partitionID").(int)
+	dss := DataStore.New(userID, partitionID)
 
 	// Get datastore entry by entry ID
 	res, err := dss.Get(entryID)
@@ -35,11 +36,12 @@ func (co Controllers) GetEntry(c echo.Context) error {
 // StoreEntry creates a new datastore entry and stores it in the database
 func (co Controllers) StoreEntry(c echo.Context) error {
 	userID := c.Get("userID").(int)
+	partitionID := c.Get("partitionID").(int)
 
 	value := c.FormValue("value")
 
 	// Initialize datastore service
-	dss := DataStore.New(userID)
+	dss := DataStore.New(userID, partitionID)
 
 	// Store datastore entry
 	res, err := dss.Store(value)
