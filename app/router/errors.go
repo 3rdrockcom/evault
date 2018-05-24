@@ -23,25 +23,33 @@ func (r *Router) appendErrorHandler() {
 
 		// Override status code based on error responses
 		switch message {
+		// API Service
 		case API.ErrInvalidCredentials.Error():
 			code = http.StatusForbidden
+
+		// DataStore Service
 		case DataStore.ErrInvalidPartitionID.Error():
 			code = http.StatusBadRequest
 		case DataStore.ErrEntryNotFound.Error():
 			code = http.StatusNotFound
 		case DataStore.ErrEntryInvalid.Error():
 			code = http.StatusBadRequest
+		case DataStore.ErrEntryLengthExceeded.Error():
+			code = http.StatusBadRequest
 		case DataStore.ErrEntryInvalidSignature.Error():
 			// Status Code 419: Checksum Failed
 			code = 419
+
+		// User Service
 		case User.ErrUserNotFound.Error():
 			code = http.StatusNotFound
 		case User.ErrInvalidProgramID.Error():
 			code = http.StatusBadRequest
 		case User.ErrUserExists.Error():
 			code = http.StatusBadRequest
+
+		// Unknown error
 		default:
-			// Unknown error
 			if _, ok := err.(*echo.HTTPError); !ok {
 				message = "Internal Error"
 			}

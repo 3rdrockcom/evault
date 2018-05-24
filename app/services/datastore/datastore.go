@@ -13,6 +13,9 @@ import (
 // DB is the database handler
 var DB *dbx.DB
 
+// EntryLength is the maximum length of an entry value
+const EntryLength = 2000
+
 // DataStoreService is a service that manages the datastore
 type DataStoreService struct {
 	userID      int
@@ -34,6 +37,11 @@ func New(userID int, partitionID int) *DataStoreService {
 // Store creates a new datastore entry and stores it in the database
 func (dss *DataStoreService) Store(str string) (datastore *models.DataStore, err error) {
 	datastore = new(models.DataStore)
+
+	if len(str) > EntryLength {
+		err = ErrEntryLengthExceeded
+		return
+	}
 
 	// Generate a hash
 	hash, err := dss.signature.Create(str)

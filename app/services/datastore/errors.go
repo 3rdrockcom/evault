@@ -12,6 +12,9 @@ var (
 	// ErrEntryNotFound is an error for a non-existent datastore entry
 	ErrEntryNotFound = errors.New("Entry ID not found")
 
-	// ErrEntryInvalidSignature is an error datastore entry does not match its stored signature
+	// ErrEntryInvalidSignature is an error given when a datastore entry does not match its stored signature
 	ErrEntryInvalidSignature = errors.New("Cannot verify signature for this entry")
+
+	// ErrEntryLengthExceeded is an error given when a datastore entry exceeds a specified length
+	ErrEntryLengthExceeded = errors.New("Entry value is too long")
 )
