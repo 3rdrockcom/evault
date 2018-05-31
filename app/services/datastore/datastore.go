@@ -86,7 +86,7 @@ func (dss *DataStoreService) Get(entryID int) (datastore *models.DataStore, err 
 	}
 
 	isValid, err := dss.signature.Verify(datastore.Data, datastore.Signature)
-	if err != nil && !isValid {
+	if err != nil || !isValid {
 		err = ErrEntryInvalidSignature
 		return nil, err
 	}
